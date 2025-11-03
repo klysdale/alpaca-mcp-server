@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  alpaca_mcp_server:
+    build:
+      context: .
+      args:
+        # Populate these via an .env file or build CLI flags so they are baked into the image.
+        ALPACA_API_KEY: ${ALPACA_API_KEY:-changeme}
+        ALPACA_SECRET_KEY: ${ALPACA_SECRET_KEY:-changeme}
+        ALPACA_API_BASE_URL: ${ALPACA_API_BASE_URL:-https://paper-api.alpaca.markets}
+    environment:
+      HOST: 0.0.0.0
+      PORT: ${PORT:-7800}
+      MCP_TRANSPORT: ${MCP_TRANSPORT:-http}
+    ports:
+      - "${PORT:-7800}:7800"
+    restart: unless-stopped
